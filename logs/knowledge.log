@@ -1,0 +1,6 @@
+2026-07-28 22:46:58,071 | INFO | Logger test successful
+2026-07-30 19:11:43,282 | INFO | New documents detected:
+2026-07-30 19:11:43,282 | INFO | New document: 05-ANN-Artificial-Neural-Networks.pdf
+2026-07-30 19:11:43,282 | INFO | New document: 3.pdf
+2026-07-30 19:11:43,515 | ERROR | Document loading failed: `pypdf` package not found, please install it with `pip install pypdf`
+2026-07-30 19:11:43,515 | ERROR | Knowledge base update failed: `pypdf` package not found, please install it with `pip install pypdf`
