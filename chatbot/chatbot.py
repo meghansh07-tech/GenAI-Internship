@@ -96,13 +96,27 @@ rag_chain = (
 # -------------------------
 
 def ask_question(question: str):
+
+    print("========== STEP 1 ==========")
+
     docs = retriever.invoke(question)
 
-    print("=" * 50)
+    print("========== STEP 2 ==========")
+    print(f"Retrieved {len(docs)} documents")
 
-    for doc in docs:
-        print(doc.page_content[:300])
+    context = format_docs(docs)
 
-    print("=" * 50)
+    print("========== STEP 3 ==========")
 
-    return rag_chain.invoke(question)
+    prompt_text = prompt.invoke({
+        "context": context,
+        "question": question
+    })
+
+    print("========== STEP 4 ==========")
+
+    response = llm.invoke(prompt_text)
+
+    print("========== STEP 5 ==========")
+
+    return response.content
