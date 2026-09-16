@@ -51,7 +51,8 @@ st.caption(
     "Task 2 • Vision Language Model | "
     "Task 3 • Medical Q&A | "
     "Task 4 • AI Research Assistant | "
-    "Task 5 • Sentiment-Aware Chatbot"
+    "Task 5 • Sentiment-Aware Chatbot | "
+    "Task 6 • Multilingual Chatbot"
 
 )
 
@@ -512,8 +513,6 @@ else:
 # ABOUT
 # ===================================================
 
-st.sidebar.divider()
-
 st.sidebar.info(
     """
 ### 🚀 Features
@@ -533,6 +532,14 @@ st.sidebar.info(
 ✅ Concept Visualization
 
 ✅ Multi-turn Research Conversation
+
+✅ Multilingual Conversations
+
+✅ Hindi • Spanish • French Support
+
+✅ Language Switching
+
+✅ Cross-lingual Context Retention
 
 ### Powered by
 
