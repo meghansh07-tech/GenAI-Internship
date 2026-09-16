@@ -50,7 +50,9 @@ st.caption(
     "Task 1 • RAG Chatbot | "
     "Task 2 • Vision Language Model | "
     "Task 3 • Medical Q&A | "
-    "Task 4 • AI Research Assistant"
+    "Task 4 • AI Research Assistant | "
+    "Task 5 • Sentiment-Aware Chatbot"
+
 )
 
 

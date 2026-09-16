@@ -10,6 +10,8 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
 from vector_db.chroma_manager import get_vector_database
+from sentiment.sentiment_analyzer import SentimentAnalyzer
+
 
 
 # -------------------------
@@ -33,7 +35,11 @@ llm = ChatOllama(
     model="llama3.2",
     temperature=0
 )
+#-------------------------
+# Sentiment Analyser
 
+
+sentiment_analyzer = SentimentAnalyzer()
 
 # -------------------------
 # Prompt
@@ -96,6 +102,16 @@ rag_chain = (
 # -------------------------
 
 def ask_question(question: str):
+    print("========== SENTIMENT ==========")
+
+    sentiment_result = sentiment_analyzer.analyze(question)
+
+    sentiment = sentiment_result["sentiment"]
+    confidence = sentiment_result["confidence"]
+
+    print(f"Sentiment: {sentiment}")
+    print(f"Confidence: {confidence}")
+
 
     print("========== STEP 1 ==========")
 
@@ -119,4 +135,11 @@ def ask_question(question: str):
 
     print("========== STEP 5 ==========")
 
-    return response.content
+    response_text = response.content
+    prefix = sentiment_analyzer.get_response_prefix(sentiment)
+
+    return prefix + response_text
+
+
+
+
