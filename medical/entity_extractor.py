@@ -1,9 +1,9 @@
 import re
 
 
-# ----------------------------------------
+# --------------------------------------------------
 # Medical Entity Lists
-# ----------------------------------------
+# --------------------------------------------------
 
 SYMPTOMS = {
     "fever",
@@ -22,6 +22,7 @@ SYMPTOMS = {
     "chest pain"
 }
 
+
 DISEASES = {
     "diabetes",
     "cancer",
@@ -32,8 +33,18 @@ DISEASES = {
     "hypertension",
     "asthma",
     "arthritis",
-    "anemia"
+    "anemia",
+
+    # Multi-word diseases
+    "familial mediterranean fever",
+    "familial cold autoinflammatory syndrome",
+    "rheumatic fever",
+    "periodic fever aphthous stomatitis pharyngitis and adenitis",
+    "tumor necrosis factor receptor-associated periodic syndrome",
+    "q fever",
+    "necrotizing fasciitis"
 }
+
 
 TREATMENTS = {
     "insulin",
@@ -47,38 +58,56 @@ TREATMENTS = {
 }
 
 
-# ----------------------------------------
+# --------------------------------------------------
 # Entity Extraction
-# ----------------------------------------
+# --------------------------------------------------
 
 def extract_medical_entities(text: str):
 
     text = text.lower()
 
-    tokens = re.findall(r"[a-zA-Z0-9\- ]+", text)
-
     symptoms = []
     diseases = []
     treatments = []
 
-    for token in tokens:
+    # --------------------------------------------------
+    # Detect diseases FIRST
+    # --------------------------------------------------
 
-        token = token.strip()
+    for disease in DISEASES:
 
-        if token in SYMPTOMS:
-            symptoms.append(token)
+        if re.search(
+            r"\b" + re.escape(disease) + r"\b",
+            text
+        ):
+            diseases.append(disease)
 
-        if token in DISEASES:
-            diseases.append(token)
+    # --------------------------------------------------
+    # Detect symptoms
+    # --------------------------------------------------
 
-        if token in TREATMENTS:
-            treatments.append(token)
+    for symptom in SYMPTOMS:
+
+        if re.search(
+            r"\b" + re.escape(symptom) + r"\b",
+            text
+        ):
+            symptoms.append(symptom)
+
+    # --------------------------------------------------
+    # Detect treatments
+    # --------------------------------------------------
+
+    for treatment in TREATMENTS:
+
+        if re.search(
+            r"\b" + re.escape(treatment) + r"\b",
+            text
+        ):
+            treatments.append(treatment)
 
     return {
-
         "symptoms": sorted(set(symptoms)),
-
         "diseases": sorted(set(diseases)),
-
         "treatments": sorted(set(treatments))
     }

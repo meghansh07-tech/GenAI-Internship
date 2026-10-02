@@ -16,7 +16,504 @@ st.set_page_config(
     page_title="MultiModal AI Assistant",
     page_icon="🤖",
     layout="wide"
+
 )
+
+# ===================================================
+# WARM MODERN UI STYLING
+# ===================================================
+
+st.markdown("""
+<style>
+
+    /* =========================
+       MAIN APP BACKGROUND
+       ========================= */
+
+    .stApp {
+        background:
+            radial-gradient(circle at 85% 10%,
+                rgba(255, 184, 77, 0.28),
+                transparent 32%),
+            radial-gradient(circle at 50% 80%,
+                rgba(255, 218, 128, 0.22),
+                transparent 35%),
+            linear-gradient(
+                135deg,
+                #fff8e7 0%,
+                #fff4dc 35%,
+                #fff0df 65%,
+                #ffe8d2 100%
+            ) !important;
+
+        color: #35220f !important;
+    }
+
+
+    /* =========================
+       MAIN CONTENT
+       ========================= */
+
+    .block-container {
+        padding-top: 1.5rem;
+        padding-bottom: 2rem;
+        max-width: 1250px;
+    }
+
+
+    /* =========================
+       TEXT
+       ========================= */
+
+    .stApp,
+    .stApp p,
+    .stApp span,
+    .stApp label {
+        color: #3d2a16;
+    }
+
+    .stMarkdown p {
+        color: #5a4024 !important;
+    }
+
+
+    /* =========================
+       HEADINGS
+       ========================= */
+
+    h1 {
+        font-size: 2.25rem !important;
+        font-weight: 750 !important;
+        letter-spacing: -0.7px;
+
+        color: #8a3f00 !important;
+
+        margin-bottom: 0.25rem !important;
+    }
+
+    h2 {
+        font-weight: 700 !important;
+        color: #7a3b00 !important;
+    }
+
+    h3 {
+        font-weight: 650 !important;
+        color: #63330d !important;
+    }
+
+
+    /* =========================
+       SIDEBAR
+       ========================= */
+
+    section[data-testid="stSidebar"] {
+
+        background:
+            linear-gradient(
+                180deg,
+                #fff3cf 0%,
+                #fff0d8 45%,
+                #ffe6d2 100%
+            ) !important;
+
+        border-right: 1px solid #f2c27b;
+    }
+
+    section[data-testid="stSidebar"] > div {
+        padding-top: 1.5rem;
+    }
+
+    section[data-testid="stSidebar"] * {
+        color: #542d0c !important;
+    }
+
+    section[data-testid="stSidebar"] hr {
+        border-color: #f1c98d !important;
+    }
+
+
+    /* =========================
+       SIDEBAR RADIO OPTIONS
+       ========================= */
+
+    section[data-testid="stSidebar"] div[role="radiogroup"] {
+        gap: 8px;
+    }
+
+    section[data-testid="stSidebar"] div[role="radiogroup"] label {
+
+        background:
+            rgba(255, 255, 255, 0.72) !important;
+
+        border: 1px solid #f3d4a5;
+
+        border-radius: 13px;
+
+        padding: 10px 12px;
+
+        color: #542d0c !important;
+
+        transition: all 0.2s ease;
+
+        box-shadow:
+            0 3px 10px rgba(160, 91, 20, 0.05);
+    }
+
+    section[data-testid="stSidebar"]
+    div[role="radiogroup"]
+    label:hover {
+
+        background: #fff7e8 !important;
+
+        border-color: #f4a340;
+
+        transform: translateX(2px);
+
+        box-shadow:
+            0 5px 15px rgba(230, 126, 34, 0.12);
+    }
+
+
+    /* =========================
+       BUTTONS
+       ========================= */
+
+    .stButton > button {
+
+        border-radius: 11px !important;
+
+        border: 1px solid #f1c27d !important;
+
+        background:
+            linear-gradient(
+                135deg,
+                #fffdf7,
+                #fff4df
+            ) !important;
+
+        color: #713900 !important;
+
+        font-weight: 600 !important;
+
+        min-height: 40px;
+
+        transition: all 0.2s ease;
+    }
+
+    .stButton > button:hover {
+
+        border-color: #e88921 !important;
+
+        background:
+            linear-gradient(
+                135deg,
+                #fff1cf,
+                #ffe2b5
+            ) !important;
+
+        color: #a44800 !important;
+
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 5px 14px rgba(225, 126, 34, 0.16);
+    }
+
+
+    /* =========================
+       INPUTS
+       ========================= */
+
+    div[data-baseweb="input"],
+    div[data-baseweb="textarea"] {
+        border-radius: 13px !important;
+    }
+
+    div[data-baseweb="input"] > div,
+    div[data-baseweb="textarea"] > div {
+
+        border-radius: 13px !important;
+
+        border: 1px solid #efc27e !important;
+
+        background: rgba(255,255,255,0.92) !important;
+    }
+
+    div[data-baseweb="input"] input,
+    div[data-baseweb="textarea"] textarea {
+
+        color: #3d2a16 !important;
+
+        background: transparent !important;
+    }
+
+    div[data-baseweb="input"] input::placeholder,
+    div[data-baseweb="textarea"] textarea::placeholder {
+
+        color: #b38b62 !important;
+    }
+
+    div[data-baseweb="input"] > div:focus-within,
+    div[data-baseweb="textarea"] > div:focus-within {
+
+        border-color: #ed922c !important;
+
+        box-shadow:
+            0 0 0 3px rgba(245, 158, 11, 0.13);
+    }
+
+
+    /* =========================
+       CHAT MESSAGES
+       ========================= */
+
+    [data-testid="stChatMessage"] {
+
+        border-radius: 16px !important;
+
+        padding: 12px 15px;
+
+        margin: 9px 0;
+
+        border: 1px solid #f0d19f !important;
+
+        background:
+            rgba(255,255,255,0.88) !important;
+
+        box-shadow:
+            0 4px 15px rgba(135, 78, 18, 0.055);
+    }
+
+    [data-testid="stChatMessage"] p,
+    [data-testid="stChatMessage"] span,
+    [data-testid="stChatMessage"] div {
+
+        color: #3d2a16 !important;
+    }
+
+
+    /* =========================
+       USER MESSAGE
+       ========================= */
+
+    [data-testid="stChatMessage"]:has(
+        [data-testid="chatAvatarIcon-user"]
+    ) {
+
+        background:
+            linear-gradient(
+                135deg,
+                #fff0c9,
+                #ffe3bd
+            ) !important;
+
+        border-color: #f4c56f !important;
+    }
+
+
+    /* =========================
+       CHAT INPUT
+       ========================= */
+
+    [data-testid="stChatInput"] {
+        margin-top: 15px;
+    }
+
+    [data-testid="stChatInput"] > div {
+
+        border-radius: 16px !important;
+
+        border: 1.5px solid #efa646 !important;
+
+        background:
+            rgba(255,255,255,0.95) !important;
+
+        box-shadow:
+            0 6px 24px rgba(190, 105, 20, 0.12);
+    }
+
+    [data-testid="stChatInput"] textarea {
+
+        color: #3d2a16 !important;
+
+        font-size: 14px;
+    }
+
+    [data-testid="stChatInput"] textarea::placeholder {
+
+        color: #b99a76 !important;
+    }
+
+
+    /* =========================
+       TABS
+       ========================= */
+
+    button[data-baseweb="tab"] {
+
+        font-weight: 600 !important;
+
+        color: #8a6949 !important;
+
+        padding: 10px 18px;
+    }
+
+    button[data-baseweb="tab"][aria-selected="true"] {
+
+        color: #d96500 !important;
+    }
+
+    div[data-baseweb="tab-highlight"] {
+
+        background: #f28c28 !important;
+
+        height: 3px;
+    }
+
+
+    /* =========================
+       FILE UPLOADER
+       ========================= */
+
+    [data-testid="stFileUploader"] {
+
+        background:
+            rgba(255, 247, 229, 0.85) !important;
+
+        border: 1px dashed #e9a34d !important;
+
+        border-radius: 13px;
+
+        padding: 8px;
+    }
+
+    [data-testid="stFileUploader"] * {
+
+        color: #68401d !important;
+    }
+
+
+    /* =========================
+       ALERTS
+       ========================= */
+
+    div[data-testid="stAlert"] {
+
+        border-radius: 12px !important;
+
+        border-left: 4px solid #f28c28 !important;
+    }
+
+
+    /* =========================
+       RESEARCH PAPER CARDS
+       ========================= */
+
+    .paper-result {
+
+        background:
+            rgba(255,255,255,0.9);
+
+        border: 1px solid #f0c987;
+
+        border-radius: 15px;
+
+        padding: 18px;
+
+        margin: 12px 0;
+
+        box-shadow:
+            0 4px 14px rgba(150, 85, 20, 0.055);
+
+        transition: all 0.2s ease;
+    }
+
+    .paper-result:hover {
+
+        border-color: #efa13b;
+
+        box-shadow:
+            0 8px 22px rgba(210, 112, 20, 0.12);
+
+        transform: translateY(-2px);
+    }
+
+    .paper-title {
+
+        font-size: 17px;
+
+        font-weight: 700;
+
+        color: #713600 !important;
+    }
+
+    .paper-meta {
+
+        color: #947250 !important;
+
+        font-size: 12px;
+
+        margin-top: 5px;
+    }
+
+
+    /* =========================
+       DIVIDERS
+       ========================= */
+
+    hr {
+        border-color: #edc98e !important;
+    }
+
+
+    /* =========================
+       IMAGE
+       ========================= */
+
+    [data-testid="stImage"] img {
+
+        border-radius: 15px;
+
+        border: 1px solid #efc786;
+
+        box-shadow:
+            0 6px 20px rgba(150, 80, 15, 0.08);
+    }
+
+
+    /* =========================
+       STATUS
+       ========================= */
+
+    div[data-testid="stStatusWidget"] {
+
+        border-radius: 12px !important;
+
+        border: 1px solid #efc27e !important;
+
+        background: rgba(255,250,238,0.9) !important;
+    }
+
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 768px) {
+
+        .block-container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        h1 {
+            font-size: 1.8rem !important;
+        }
+    }
+
+</style>
+""", unsafe_allow_html=True)
+
 
 
 # ===================================================

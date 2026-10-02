@@ -38,7 +38,7 @@ def load_medquad_documents():
 
             answer = qa.findtext("Answer")
 
-            if question is None or answer is None:
+            if question is None or answer is None or not answer.strip():
                 continue
 
             document = Document(
