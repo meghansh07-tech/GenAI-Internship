@@ -15,4 +15,4 @@ vector_db/
 data/arxiv/
 data/MedQuAD/
 
-test_*.py
+test_*.py.env
