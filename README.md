@@ -1,4 +1,4 @@
-# 🤖 MultiModal AI Assistant — GenAI Internship Project
+# 🤖 MultiModal AI Assistant — GenAI Internship Project- Syntheia AI 
 
 A multimodal and intelligent AI assistant developed as part of the **Generative AI Internship**. The project builds on a single training project and progressively extends it with Retrieval-Augmented Generation (RAG), vision-language capabilities, medical question answering, research assistance, sentiment analysis, and multilingual conversations.
 
