@@ -7,25 +7,62 @@ class ConceptExplainer:
 
         self.llm = get_llm()
 
+
+    # ===================================================
+    # NORMAL EXPLANATION
+    # ===================================================
+
     def explain(self, concept):
 
         prompt = f"""
-You are an expert Computer Science professor.
+You are Syntheia AI, a concise Computer Science research assistant.
 
-Explain:
+Explain the following concept clearly and accurately:
 
 {concept}
 
-Provide:
+Response requirements:
 
-1. Definition
-2. Working
-3. Advantages
-4. Limitations
-5. Real-world Applications
-6. Simple Explanation
+- Start with a short definition.
+- Explain the core idea and working.
+- Mention important advantages or limitations only when relevant.
+- Give a practical/example use case when useful.
+- Keep the response concise and interview-friendly.
+- Avoid unnecessary long sections.
+- Do not repeat the question.
 """
 
         response = self.llm.invoke(prompt)
 
         return response.content
+
+
+    # ===================================================
+    # STREAMING EXPLANATION
+    # ===================================================
+
+    def stream_explain(self, concept):
+
+        prompt = f"""
+You are Syntheia AI, a concise Computer Science research assistant.
+
+Explain the following concept clearly and accurately:
+
+{concept}
+
+Response requirements:
+
+- Start with a short definition.
+- Explain the core idea and working.
+- Mention important advantages or limitations only when relevant.
+- Give a practical/example use case when useful.
+- Keep the response concise and interview-friendly.
+- Avoid unnecessary long sections.
+- Do not repeat the question.
+"""
+
+        for chunk in self.llm.stream(prompt):
+
+            if chunk.content:
+
+                yield chunk.content

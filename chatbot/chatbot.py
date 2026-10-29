@@ -15,8 +15,6 @@ from multilingual.multilingual_handler import MultilingualHandler
 from memory.conversation_memory import ConversationMemory
 
 
-
-
 # -------------------------
 # Load Vector Database
 # -------------------------
@@ -38,9 +36,11 @@ llm = ChatOllama(
     model="llama3.2",
     temperature=0
 )
-#-------------------------
-# Sentiment Analyser
 
+
+# -------------------------
+# Sentiment Analyser
+# -------------------------
 
 sentiment_analyzer = SentimentAnalyzer()
 
@@ -54,12 +54,14 @@ multilingual_handler = MultilingualHandler()
 conversation_memory = ConversationMemory(
     max_history=10
 )
+
+
 # -------------------------
 # Prompt
 # -------------------------
 
 prompt = ChatPromptTemplate.from_template(
-"""
+    """
 You are a helpful AI assistant.
 
 Answer ONLY using the provided context.
@@ -86,6 +88,7 @@ Question:
 {question}
 """
 )
+
 
 # -------------------------
 # Format Retrieved Docs
@@ -126,6 +129,27 @@ rag_chain = (
 def ask_question(question: str):
 
     # -------------------------
+    # FAST PATH FOR SIMPLE MESSAGES
+    # -------------------------
+
+    simple_messages = {
+        "hi": "Hello! How can I help you today?",
+        "hello": "Hello! How can I help you today?",
+        "hey": "Hey! How can I help you today?",
+        "hii": "Hello! How can I help you today?",
+        "hiii": "Hello! How can I help you today?",
+        "thanks": "You're welcome!",
+        "thank you": "You're welcome!",
+    }
+
+    normalized_question = question.strip().lower()
+
+    if normalized_question in simple_messages:
+
+        return simple_messages[normalized_question]
+
+
+    # -------------------------
     # MULTILINGUAL INPUT
     # -------------------------
 
@@ -160,6 +184,7 @@ def ask_question(question: str):
         f"{english_question}"
     )
 
+
     # -------------------------
     # SENTIMENT ANALYSIS
     # -------------------------
@@ -176,6 +201,7 @@ def ask_question(question: str):
     print(f"Sentiment: {sentiment}")
     print(f"Confidence: {confidence}")
 
+
     # -------------------------
     # RETRIEVE DOCUMENTS
     # -------------------------
@@ -187,11 +213,13 @@ def ask_question(question: str):
     )
 
     print("========== STEP 2 ==========")
+
     print(
         f"Retrieved {len(docs)} documents"
     )
 
     context = format_docs(docs)
+
 
     # -------------------------
     # GENERATE RESPONSE
@@ -207,11 +235,14 @@ def ask_question(question: str):
 
     print("========== STEP 4 ==========")
 
-    response = llm.invoke(prompt_text)
+    response = llm.invoke(
+        prompt_text
+    )
 
     print("========== STEP 5 ==========")
 
     response_text = response.content
+
 
     # -------------------------
     # SENTIMENT RESPONSE
@@ -222,6 +253,7 @@ def ask_question(question: str):
     )
 
     response_text = prefix + response_text
+
 
     # -------------------------
     # TRANSLATE RESPONSE
@@ -236,6 +268,7 @@ def ask_question(question: str):
         )
     )
 
+
     # -------------------------
     # UPDATE MEMORY
     # -------------------------
@@ -248,9 +281,5 @@ def ask_question(question: str):
         response_text
     )
 
+
     return final_response
-
-
-
-
-
